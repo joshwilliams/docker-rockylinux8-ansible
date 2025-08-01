@@ -3,7 +3,7 @@ LABEL maintainer="Jeff Geerling"
 ENV container=docker
 
 # See: https://github.com/geerlingguy/docker-rockylinux8-ansible/issues/6
-ENV pip_packages "ansible<10.0"
+ENV pip_packages="ansible<10.0"
 
 # Install systemd -- See https://hub.docker.com/_/centos/
 RUN rm -f /lib/systemd/system/multi-user.target.wants/*;\
@@ -25,17 +25,17 @@ RUN yum -y install rpm dnf-plugins-core \
       which \
       hostname \
       libyaml-devel \
-      python3 \
-      python3-pip \
-      python3-pyyaml \
+      python3.12 \
+      python3.12-pip \
+      python3.12-pyyaml \
       iproute \
  && yum clean all
 
 # Upgrade pip to latest version.
-RUN pip3 install --upgrade pip
+RUN pip3.12 install --upgrade pip
 
 # Install Ansible via Pip.
-RUN pip3 install $pip_packages
+RUN pip3.12 install $pip_packages
 
 # Disable requiretty.
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
